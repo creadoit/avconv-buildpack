@@ -14,11 +14,11 @@ echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
 cd $BUILD_DIR
 mkdir -p $VENDOR_DIR
 cd $VENDOR_DIR
-mkdir -p avconv
-cd avconv
+mkdir -p libav
+cd libav
 curl -L --silent $DOWNLOAD_URL | tar xJ --strip-components=1
 
 echo "exporting PATH" | indent
-PROFILE_PATH="$BUILD_DIR/.profile.d/avconv.sh"
+PROFILE_PATH="$BUILD_DIR/.profile.d/libav.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="$PATH:${HOME}/vendor/avconv"' >> $PROFILE_PATH
+echo 'export PATH="$PATH:${HOME}/vendor/libav"' >> $PROFILE_PATH
