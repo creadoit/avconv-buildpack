@@ -1,3 +1,5 @@
-#!/usr/bin/env bash
-avconv -version | grep avconv
+#!/bin/sh
+
+# this pack is valid for all apps
+echo "avconv"
 exit 0

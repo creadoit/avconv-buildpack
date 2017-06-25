@@ -1,10 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-echo "-----> Installing avconv"
-# change to the the BUILD_DIR ($1)
-cd $1
-# download the binary (-O) silently (-s)
-curl http://johnvansickle.com/libav/releases/libav-release-64bit-static.tar.xz -s -O -L
-# untar the binary to the directory we want
-tar -xvf libav-release-64bit-static.tar.xz
-mv ./libav-12-64bit-static ./bin/avconv
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Install avconv (libav)"
+BUILD_DIR=$1
+VENDOR_DIR="vendor"
+DOWNLOAD_URL="http://johnvansickle.com/libav/releases/libav-release-64bit-static.tar.xz"
+
+echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+
+cd $BUILD_DIR
+mkdir -p $VENDOR_DIR
+cd $VENDOR_DIR
+mkdir -p avconv
+cd avconv
+curl -L --silent $DOWNLOAD_URL | tar xJ --strip-components=1
+
+echo "exporting PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/avconv.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$PATH:${HOME}/vendor/avconv"' >> $PROFILE_PATH
